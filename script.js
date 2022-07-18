@@ -19,7 +19,7 @@ window.addEventListener("load", () => {
         })
         .then((data) => {
           console.log(data);
-          const { temperature, summary } = data.currently;
+          const { temperature, summary, icon } = data.currently;
           //Set DOM Elements From the API
           tempDegree.textContent = temperature;
           tempDesc.textContent = summary;
@@ -29,11 +29,10 @@ window.addEventListener("load", () => {
         });
     });
   }
-
   function setIcons(icon, iconID) {
     const skycons = new skycons({ color: "white" });
     const currentIcon = icon.replace(/-/g, "_").toUpperCase();
-    skycons.paly();
-    return skycons.set(iconID, Skycons[currentIcon]);
+    skycons.play();
+    return skycons.set(iconID, skycons[currentIcon]);
   }
 });
