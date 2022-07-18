@@ -4,6 +4,8 @@ window.addEventListener("load", () => {
   let tempDesc = document.querySelector(".temp-description");
   let tempDegree = document.querySelector(".temp-degree");
   let LocationTimeZone = document.querySelector(".loc-timezone");
+  let temperatureSection = document.querySelector(".temperature");
+  const temperatureSpan = document.querySelector(".temperature span");
 
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition((position) => {
@@ -24,15 +26,30 @@ window.addEventListener("load", () => {
           tempDegree.textContent = temperature;
           tempDesc.textContent = summary;
           LocationTimeZone.textContent = data.timezone;
+
+          // Formula for Celsius
+          let celsius = (temperature - 32) * (5 / 9);
           //Set Icon
           setIcons(icon, document.querySelector(".icon"));
+
+          // change Temp To celsius/Farenheit
+
+          temperatureSection.addEventListener("click", () => {
+            if (temperatureSpan.textContent === "F") {
+              temperatureSpan.textContent = "C";
+              tempDegree.textContent = Math.floor(celsius);
+            } else {
+              temperatureSpan.textContent = "F";
+              tempDegree.textContent = temperature;
+            }
+          });
         });
     });
   }
   function setIcons(icon, iconID) {
-    const skycons = new skycons({ color: "white" });
+    const skycons = new Skycons({ color: "white" });
     const currentIcon = icon.replace(/-/g, "_").toUpperCase();
     skycons.play();
-    return skycons.set(iconID, skycons[currentIcon]);
+    return skycons.set(iconID, Skycons[currentIcon]);
   }
 });
